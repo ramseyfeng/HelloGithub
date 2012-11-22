@@ -1,0 +1,17 @@
+1. Extend Form API attribute to define the browser:
+   A. image link after the textfield(wrapper structure)
+   B. content(which view)
+   C. selection behavior(create link for the first column?) 
+   
+2. Pop up the browser
+   A. pop up poisition,size
+   B. first call the function fo javascript object to create modal style div
+   C. second, after display the browser modal style div, then retrieve the view content via ajax request
+   
+3. Selection back on browser
+   A. Link for select (Depend on view format? how to add after view refresh?)
+   B. Scrap the row data from view html(consider the return data structure, javascrit array?)
+   C. Call the callback(one event of javascript object) to fill back the selected value
+   
+Note: maybe need a sequence diagram above three step(the objects on sequece diagram can be below:
+       Custom back end/lookup back end(module.inc part)/Custom front end UI/lookup front end(inlcude javascript object)/lookup back end)
