@@ -4,3 +4,6 @@ package = User interface
 core = 7.x
 files[] = lookup.module
 
+;scripts
+scripts[] = javascript/lookup.js
+
