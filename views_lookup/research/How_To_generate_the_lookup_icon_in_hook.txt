@@ -1,0 +1,21 @@
+1.Add ¡®#lookup¡¯ attribute in the textfield element:
+$parent['claim_info']['claim_info_bottom']['claim_info_bottom_line1']['claim_date'] = array(
+    '#type' => 'textfield',
+'#lookup' => TRUE,
+¡­);
+2.Add hook method in module file:
+//add pre_render method for each element
+function warranty_element_info_alter(&$type) {
+  if (!isset($type['textfield']['#pre_render'])) {
+    $type['textfield']['#pre_render'] = array();
+  }
+  array_unshift($type['textfield']['#pre_render'],
+      'warranty_textfield_pre_render_callback');
+}
+//do specific handling in pre_render callback
+function warranty_textfield_pre_render_callback($element) {
+  if(isset($element['#lookup']) && $element['#lookup'] == TRUE) {
+    //We can wrapper the element with a lookup wrapper here,
+    //Notice if the element already has #prefix, #suffix defined, we should wrapped them rather than override them.
+  }
+
