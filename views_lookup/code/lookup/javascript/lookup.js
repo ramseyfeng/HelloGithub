@@ -24,11 +24,27 @@
 	
 	lookup.drawBrowseFrame = function(){
 		//TODO:create the div element using jquery and return the id
+		//the frame structure(include the ajax waiting img):
+		//<div id="browse_frame"><div id="content_wrapper"><img/></div></div>
+		//For image file, we use Drupal.settings.basePath plus img path to retrieve it
 	};
 	
 	lookup.showBrowse = function(frameId,viewId){
 		//TODO:call the jquery dialog to show the browse
 		//consider how to create the ajax waiting UI before the ajax request return
+		
+		lookup.getViewContent(viewId);
+		
+		var frameSeletor = '#' + frameId;
+		$(frameSeletor).dialog({
+            autoOpen: false,
+            height: 800,
+            width: 600,
+            modal: true,
+            close: function() {
+            	$(frameSeletor).remove();
+            }
+        });		
 	};
 	
 	lookup.getViewContent = function(viewId){
