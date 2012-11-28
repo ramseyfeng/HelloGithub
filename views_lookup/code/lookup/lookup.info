@@ -7,3 +7,5 @@ files[] = lookup.module
 ;scripts
 scripts[] = javascript/lookup.js
 
+dependencies[] = views
+

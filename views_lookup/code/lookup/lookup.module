@@ -13,3 +13,17 @@ function lookup_menu(){
 function lookup_element_info_alter(){
   //TODO: use the #pre_render of textfield to wrapper the browse link
 }
+
+/**
+ * Implements hook_views api
+ */
+function lookup_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'lookup') . '/includes/views',
+      // 'template path' => drupal_get_path('module', 'example') . 'themes',
+  );
+}
+
+
+
