@@ -1,1 +1,15 @@
 <?php
+
+/**
+ * hook_menu
+ */
+function lookup_menu(){
+  //TODO:define the url path for view content page
+}
+
+/**
+ * hook_element_info_alter
+ */
+function lookup_element_info_alter(){
+  //TODO: use the #pre_render of textfield to wrapper the browse link
+}
