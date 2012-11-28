@@ -4,7 +4,23 @@
  * hook_menu
  */
 function lookup_menu(){
-  //TODO:define the url path for view content page
+  
+//TODO:define the url path for view content page
+  $items = array();
+
+  $items['lookup/test/testDrupal'] = array(
+    'title' => t('LOOKUP'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('lookup_test_form'),
+//    'type' => MENU_NORMAL_ITEM,
+//    'weight' => 6,
+    'menu_name' => 'main-menu', //to display in main menu
+    'file' => 'test/lookup.test.inc',
+  );
+  
+  var_dump($items);
+  return $items;
+  
 }
 
 /**
