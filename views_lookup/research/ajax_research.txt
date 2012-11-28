@@ -1,0 +1,58 @@
+front end:
+      //TODO: need to be removed
+      $(".view-validated-claims .validated_claim_number").click(function(){
+        $(this).attr("href", "#");
+        var claimID = $(this).attr("rel");
+        var claimNbr = $(this).text();
+        Warranty.selectClaim(claimNbr);
+
+        $.ajax({
+        	  type: "GET",
+        	  url: "?q=warranty/create/inspection_report",
+        	  data: {"operation":"getDivision","claimID": claimID},
+        	  dataType: "json", //Note: here dataType can be "html"
+        	  success: function(returnObject){
+        		Warranty.representDivision(returnObject);
+        	  }
+        	});
+      });
+
+
+    }
+
+  Warranty.selectClaim = function(claim) {
+    $('#claim_selected').val(claim);
+    $("#inspection_info_inner_wrapper").hide();
+    $("#inspection_info_wrapper").addClass("small-loading");
+
+  }
+
+  Warranty.representDivision = function(returnObject){
+    if($(returnObject.divisionObj).length) {
+      $("#edit-division-name").text(returnObject.divisionObj.name);
+      $("#edit-division-address-1").text(returnObject.divisionObj.physical_address_line1);
+      $("#edit-division-address-2").text(returnObject.divisionObj.physical_address_line2);
+      $("#edit-division-telephone").text(returnObject.divisionObj.phone_number);
+    }
+    $("#inspection_info_inner_wrapper").show();
+    $("#inspection_info_wrapper").removeClass("small-loading");
+    Warranty.enableButton('#create_report_button');
+  }
+
+
+
+back end:
+ if (warranty_is_ajax_request() && isset($_GET['operation'])
+      && $_GET['operation'] == 'getDivision') {
+    //Claim number is in $_GET['claimID'], then write code to get the division realted data of this claim
+    //The response data should be a php array, then invoke drupal_json_output to convert it to json format
+    $claim_id = $_GET['claimID'];
+    warranty_update_current_division_by_claim_id($claim_id); //switch current division
+    $claim = warranty_get_claim($claim_id);
+    $claim_division = warranty_get_division_by_name($claim['wcl_division']);
+    $address = warranty_get_address_of_division_by_entity_code($claim_division['erp_entity']);
+    //associate address info to matched division
+    warranty_map_entity_into_division($address, $claim_division);
+    drupal_json_output(array('divisionObj' => $claim_division)); //Here maybe can return the html content of view.
+    return; //This return is needed, else the response will be changed by drupal other form related response data.
+  }
