@@ -9,11 +9,10 @@ function lookup_menu(){
   $items = array();
 
   $items['lookup/test/testDrupal'] = array(
-    'title' => t('LOOKUP'),
+    'title' => t('Test Form'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('lookup_test_form'),
-//    'type' => MENU_NORMAL_ITEM,
-//    'weight' => 6,
+    'access arguments' => array('test form'),
     'menu_name' => 'main-menu', //to display in main menu
     'file' => 'test/lookup.test.inc',
   );
@@ -26,8 +25,24 @@ function lookup_menu(){
 /**
  * hook_element_info_alter
  */
-function lookup_element_info_alter(){
+function lookup_element_info_alter(&$type){
   //TODO: use the #pre_render of textfield to wrapper the browse link
+  if (!isset($type['textfield']['#pre_render'])) {
+    $type['textfield']['#pre_render'] = array();
+  }
+  array_unshift($type['textfield']['#pre_render'],
+      'lookup_textfield_pre_render_callback');
+}
+
+function lookup_textfield_pre_render_callback($element) {
+  if(isset($element['#type']) && $element['#type'] == 'textfield'
+  && isset($element['#lookup']) && $element['#lookup'] == TRUE) {
+    $path = drupal_get_path('module', 'lookup');
+    $element['#field_suffix'] = '<a href="#">
+                                   <img src="' . $path . '/img/search.png">
+                                 </a>';
+  }
+  return $element;
 }
 
 /**
@@ -40,6 +55,16 @@ function lookup_views_api() {
       // 'template path' => drupal_get_path('module', 'example') . 'themes',
   );
 }
+
+/**
+ * Implement hook_permission().
+ */
+function lookup_permission() {
+  return array(
+    'test form' => array('title' => t('Test Form'),),
+  );
+}
+
 
 
 

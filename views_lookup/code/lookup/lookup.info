@@ -4,8 +4,13 @@ package = User interface
 core = 7.x
 files[] = lookup.module
 
+;stylesheets
+stylesheets[all][] = css/lookup.css
+
+
 ;scripts
 scripts[] = javascript/lookup.js
+scripts[] = test/test.js
 
 dependencies[] = views
 
