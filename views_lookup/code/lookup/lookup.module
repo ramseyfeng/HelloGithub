@@ -4,7 +4,7 @@
  * hook_menu
  */
 function lookup_menu(){
-  
+
 //TODO:define the url path for view content page
   $items = array();
 
@@ -17,10 +17,10 @@ function lookup_menu(){
     'menu_name' => 'main-menu', //to display in main menu
     'file' => 'test/lookup.test.inc',
   );
-  
+
   var_dump($items);
   return $items;
-  
+
 }
 
 /**
@@ -36,7 +36,7 @@ function lookup_element_info_alter(){
 function lookup_views_api() {
   return array(
     'api' => 3,
-    'path' => drupal_get_path('module', 'lookup') . '/includes/views',
+    'path' => drupal_get_path('module', 'lookup') . '/test/views',
       // 'template path' => drupal_get_path('module', 'example') . 'themes',
   );
 }
