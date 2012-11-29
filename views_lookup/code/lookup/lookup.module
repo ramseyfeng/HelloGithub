@@ -37,6 +37,7 @@ function lookup_element_info_alter(&$type){
 function lookup_textfield_pre_render_callback($element) {
   if(isset($element['#type']) && $element['#type'] == 'textfield'
   && isset($element['#lookup']) && $element['#lookup'] == TRUE) {
+    drupal_add_library('system', 'ui.dialog');
     $path = drupal_get_path('module', 'lookup');
     $element['#field_suffix'] = '<a href="#">
                                    <img src="' . $path . '/img/search.png">

@@ -6,6 +6,7 @@
  */
 
 function lookup_test_form($form, &$form_state) {
+  
   $form['city'] = array(
     '#lookup' => TRUE,
     '#type' => 'textfield',
@@ -16,6 +17,7 @@ function lookup_test_form($form, &$form_state) {
   );
 
   $form['country'] = array(
+    '#lookup' => TRUE,
     '#type' => 'textfield',
     '#title' => t('Country'),
     '#size' => 12,
@@ -24,6 +26,7 @@ function lookup_test_form($form, &$form_state) {
   );
 
   $form['continent'] = array(
+    '#lookup' => TRUE,
     '#type' => 'textfield',
     '#title' => t('Continent'),
     '#size' => 12,
