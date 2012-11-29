@@ -37,7 +37,7 @@
                     '<div class="browse-loading"></div>' +
                   '</div>' +
                 '</div>';
-    $(frame).appentTo('body');
+    $(frame).appendTo('body');
     return 'lookup_frame';
 		//TODO:create the div element using jquery and return the id
 		//the frame structure(include the ajax waiting img):
