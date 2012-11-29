@@ -5,11 +5,12 @@
 
 (function($) {
   $().ready(function(){
-    $('div a[alt="lookup"]').each(function(){
-      $(this).click(function(){
-        alert('lookup');
-      });
-    });
+    lookup.setUp('edit-city', 'city_list', 'updateCityInfo');
+
+    updateCityInfo = function(params) {
+
+    }
+
   });
 })(jQuery);
 

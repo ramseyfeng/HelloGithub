@@ -6,27 +6,24 @@
 * ========================================================== */
 
 (function($) {
-  var id_prefix = '#';
-	var lookup = {};
+
+  lookup = {};
 //below used by custom javascript
+  /* 1. Add the custom attr to store viewId for the inputId input element
+    * 2. Find the browse link to bind click event
+    * 3. The select back action would trigger selectback event to fill back the
+    * return data to custom UI elements.
+    * eventHandler take the args array for the selected row data
+    */
 	lookup.setUp = function(inputId,viewId,eventHandler){
-    var inputSelector = id_prefix + inputId;
     $(inputId).attr("ref", viewId);
-
     var lookupLink = lookup.findBrowseLink(inputId);
-    var frameId = lookup.drawBrowseFrame();
-
     $(lookupLink).click(function(){
+      var frameId = lookup.drawBrowseFrame();
       lookup.showBrowse(frameId, viewId);
     });
 
     $(inputId).bind('selectback', eventHandler);
-		/* 1. Add the custom attr to store viewId for the inputId input element
-		 * 2. Find the browse link to bind click event
-		 * 3. The select back action would trigger selectback event to fill back the
-		 * return data to custom UI elements.
-		 * eventHandler take the args array for the selected row data
-		 */
 	};
 
 //below used by lookup module javascript
@@ -35,6 +32,13 @@
 	};
 
 	lookup.drawBrowseFrame = function(){
+    var frame = '<div id="lookup_frame">' +
+                  '<div id="lookup_content_wrapper">' +
+                    '<div class="browse-loading"></div>' +
+                  '</div>' +
+                '</div>';
+    $(frame).appentTo('body');
+    return 'lookup_frame';
 		//TODO:create the div element using jquery and return the id
 		//the frame structure(include the ajax waiting img):
 		//<div id="browse_frame"><div id="content_wrapper"><img/></div></div>
