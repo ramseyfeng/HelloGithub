@@ -78,10 +78,16 @@
         	});    
     };
 
-    lookup.addSelectLink = function(){
     //TODO:add link for the first column for user selection data
     //trigger the selectback event in the click event of link
     //The last thing in the click event is to close the dialog.(jQuery dialog API close())
+    lookup.addSelectLink = function(){
+      $('#lookup_content_wrapper .view-content table tbody tr td:first-child').each(function(){
+        var value = $(this).text();
+        $(this).text('');
+        var link = '<a href="#">' + value + '</a>';
+        $(this).html(link);
+      });
     };
 
     lookup.findBrowseLink = function(inputId) {

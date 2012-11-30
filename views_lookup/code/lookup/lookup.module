@@ -7,7 +7,6 @@ function lookup_menu(){
 
 //TODO:define the url path(lookup/get/views) for view content page
   $items = array();
-
   $items['lookup/test/testDrupal'] = array(
     'title' => t('Test Form'),
     'page callback' => 'drupal_get_form',
@@ -17,7 +16,15 @@ function lookup_menu(){
     'file' => 'test/lookup.test.inc',
   );
 
-  var_dump($items);
+  $items['lookup/get/views'] = array(
+    'title' => t('Lookup Load Views'),
+    'description' => t('Lookup Views Page'),
+    'page callback' => 'lookup_load_views',
+    'type' => MENU_CALLBACK,
+    'file' => 'lookup.load_views.inc',
+    'access callback' => TRUE,
+  );
+  
   return $items;
 
 }
