@@ -64,11 +64,24 @@
 
     lookup.getViewContent = function(viewId){
     //TODO:ajax request to get the view content
+        $.ajax({
+        	  type: "GET",
+        	  url: "?q=lookup/get/views",
+        	  data: {"viewId": viewId},
+        	  dataType: "html",
+        	  success: function(htmlData){
+        	  	//replace the content of lookup_content_wrapper with htmldata
+        	  	$('#lookup_content_wrapper').html(htmlData);
+        	  	
+        		lookup.addSelectLink();
+        	  }
+        	});    
     };
 
     lookup.addSelectLink = function(){
     //TODO:add link for the first column for user selection data
     //trigger the selectback event in the click event of link
+    //The last thing in the click event is to close the dialog.(jQuery dialog API close())
     };
 
     lookup.findBrowseLink = function(inputId) {

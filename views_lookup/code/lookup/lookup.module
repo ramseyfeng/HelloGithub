@@ -5,7 +5,7 @@
  */
 function lookup_menu(){
 
-//TODO:define the url path for view content page
+//TODO:define the url path(lookup/get/views) for view content page
   $items = array();
 
   $items['lookup/test/testDrupal'] = array(
