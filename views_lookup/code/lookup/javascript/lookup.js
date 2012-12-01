@@ -32,7 +32,7 @@
     };
 
     lookup.drawBrowseFrame = function(){
-        var frame = '<div id="lookup_frame">' +
+        var frame = '<div id="lookup_frame" title="Lookup Browse">' +
         '<div id="lookup_content_wrapper">' +
         '<div class="browse-loading"></div>' +
         '</div>' +
@@ -53,8 +53,8 @@
 
         var frameSeletor = '#' + frameId;
         $(frameSeletor).dialog({
-            height: 500,
-            width: 400,
+            height: 400,
+            width: 500,
             modal: true,
             close: function() {
                 $(frameSeletor).remove();
