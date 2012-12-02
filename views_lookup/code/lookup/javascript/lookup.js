@@ -16,14 +16,14 @@
     * eventHandler take the args array for the selected row data
     */
     lookup.setUp = function(inputId,viewId,eventHandler){
-        $(inputId).attr("ref", viewId);
+        $('#' + inputId).attr("ref", viewId);
         var lookupLink = lookup.findBrowseLink(inputId);
         $(lookupLink).click(function(){
             var frameId = lookup.drawBrowseFrame();
-            lookup.showBrowse(frameId, viewId);
+            lookup.showBrowse(frameId, viewId,inputId);
         });
 
-        $(inputId).bind('selectback', eventHandler);
+        $('#' + inputId).bind('selectback', eventHandler);
     };
 
     //below used by lookup module javascript
@@ -45,11 +45,11 @@
     //For image file, we use Drupal.settings.basePath plus img path to retrieve it
     };
 
-    lookup.showBrowse = function(frameId,viewId){
+    lookup.showBrowse = function(frameId,viewId,inputId){
         //TODO:call the jquery dialog to show the browse
         //consider how to create the ajax waiting UI before the ajax request return
 
-        lookup.getViewContent(viewId);
+        lookup.getViewContent(viewId,inputId,frameId);
 
         var frameSeletor = '#' + frameId;
         $(frameSeletor).dialog({
@@ -62,7 +62,7 @@
         });
     };
 
-    lookup.getViewContent = function(viewId){
+    lookup.getViewContent = function(viewId,inputId,frameId){
     //TODO:ajax request to get the view content
         $.ajax({
         	  type: "GET",
@@ -73,7 +73,7 @@
         	  	//replace the content of lookup_content_wrapper with htmldata
         	  	$('#lookup_content_wrapper').html(htmlData);
         	  	
-        		lookup.addSelectLink();
+        		lookup.addSelectLink(inputId,frameId);
         	  }
         	});    
     };
@@ -81,12 +81,24 @@
     //TODO:add link for the first column for user selection data
     //trigger the selectback event in the click event of link
     //The last thing in the click event is to close the dialog.(jQuery dialog API close())
-    lookup.addSelectLink = function(){
+    lookup.addSelectLink = function(inputId,frameId){
       $('#lookup_content_wrapper .view-content table tbody tr td:first-child').each(function(){
         var value = $(this).text();
         $(this).text('');
         var link = '<a href="#">' + value + '</a>';
         $(this).html(link);
+        
+        //Add click event to the link of first column
+        $(this).click(function(){
+	        var list = new Array();
+	    	$(this).parent().children().each(function(index){
+	    		 list[index]= $(this).text();
+	    		});
+	    	
+	    	$('#' + inputId).trigger('selectback', [list]);
+	    	$('#' + frameId).dialog("close");
+	    	
+	    	});
       });
     };
 
