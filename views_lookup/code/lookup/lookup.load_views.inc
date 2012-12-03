@@ -1,17 +1,19 @@
 <?php
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Call views API to get the views content
  */
 
 function lookup_load_views() {
 
-    $result = array();
+  $result = '';
 
+  if(!empty($_REQUEST['viewId']))
+  {
     $view_id = $_REQUEST['viewId'];
     $result = views_embed_view($view_id);
+  }
 
-    print $result;
+  print $result;
 
 }
