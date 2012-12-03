@@ -6,12 +6,12 @@
  */
 
 function lookup_load_views() {
-  
+
     $result = array();
-    
+
     $view_id = $_REQUEST['viewId'];
-    $content = views_embed_view($view_id);
-    
-    print $content;
-    
+    $result = views_embed_view($view_id);
+
+    print $result;
+
 }

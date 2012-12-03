@@ -32,4 +32,7 @@ div.browse_wrapper > div + a > img {
   width: 48px;
 }
 
-
+#lookup_content_wrapper table a{
+  text-decoration: underline;
+  color: #4242DD;
+}

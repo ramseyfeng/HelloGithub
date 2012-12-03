@@ -7,103 +7,125 @@
 
 (function($) {
 
-    lookup = {};
-    //below used by custom javascript
-    /* 1. Add the custom attr to store viewId for the inputId input element
-    * 2. Find the browse link to bind click event
-    * 3. The select back action would trigger selectback event to fill back the
-    * return data to custom UI elements.
-    * eventHandler take the args array for the selected row data
-    */
-    lookup.setUp = function(inputId,viewId,eventHandler){
-        $('#' + inputId).attr("ref", viewId);
-        var lookupLink = lookup.findBrowseLink(inputId);
-        $(lookupLink).click(function(){
-            var frameId = lookup.drawBrowseFrame();
-            lookup.showBrowse(frameId, viewId,inputId);
-        });
+  //Define global Lookup object.
+  Lookup = {};
 
-        $('#' + inputId).bind('selectback', eventHandler);
-    };
+  /**
+   * Setup method for Lookup object.
+   *   Add click event for Lookup icon.
+   *   Generate the frame for views to display.
+   *   Show the Lookup views embeded in the frame.
+   *   Bind the selectback event with the custom eventHandler
+   *   (If user has not bind any callback method,
+   *   the first element's value will be filled into the corresponding input element.)
+   *   @inputId the id of input element with a lookup.
+   *   @viewId the id of the view which you want to associate it with the input element.\
+   *   @eventHandler callback method for user to do post handling
+   */
+  Lookup.setUp = function(inputId,viewId,eventHandler){
+    var lookupLink = Lookup.findBrowseLink(inputId);
+    $(lookupLink).click(function(){
+      var frameId = Lookup.drawBrowseFrame();
+      Lookup.showBrowse(frameId, viewId,inputId);
+    });
 
-    //below used by lookup module javascript
-    lookup.getViewId = function(inputId){
-    //TODO:get the viewId from input element
-    };
+    $('#' + inputId).bind('selectback', eventHandler);
+  };
 
-    lookup.drawBrowseFrame = function(){
-        var frame = '<div id="lookup_frame" title="Lookup Browse">' +
-        '<div id="lookup_content_wrapper">' +
-        '<div class="browse-loading"></div>' +
-        '</div>' +
-        '</div>';
-        $(frame).appendTo('body');
-        return 'lookup_frame';
-    //TODO:create the div element using jquery and return the id
-    //the frame structure(include the ajax waiting img):
-    //<div id="browse_frame"><div id="content_wrapper"><img/></div></div>
-    //For image file, we use Drupal.settings.basePath plus img path to retrieve it
-    };
+  /**
+   * Method to draw a frame for the views to display.
+   */
+  Lookup.drawBrowseFrame = function(){
+    var frame = '<div id="lookup_frame" title="Lookup Browse">' +
+                  '<div id="lookup_content_wrapper">' +
+                    '<div class="browse-loading"></div>' +
+                  '</div>' +
+                '</div>';
+    $(frame).appendTo('body');
+    return 'lookup_frame';
+  };
 
-    lookup.showBrowse = function(frameId,viewId,inputId){
-        //TODO:call the jquery dialog to show the browse
-        //consider how to create the ajax waiting UI before the ajax request return
+  /**
+   * Using jQuery UI to show the dialog for views.
+   */
+  Lookup.showBrowse = function(frameId,viewId,inputId){
 
-        lookup.getViewContent(viewId,inputId,frameId);
+    Lookup.getViewContent(viewId,inputId,frameId);
 
-        var frameSeletor = '#' + frameId;
-        $(frameSeletor).dialog({
-            height: 400,
-            width: 500,
-            modal: true,
-            close: function() {
-                $(frameSeletor).remove();
-            }
-        });
-    };
+    var frameSeletor = '#' + frameId;
+    $(frameSeletor).dialog({
+      height: 400,
+      width: 500,
+      modal: true,
+      close: function() {
+        $(frameSeletor).remove();
+      }
+    });
+  };
 
-    lookup.getViewContent = function(viewId,inputId,frameId){
+  /**
+   * Using ajax to load the specified views content.
+   */
+  Lookup.getViewContent = function(viewId,inputId,frameId){
     //TODO:ajax request to get the view content
-        $.ajax({
-        	  type: "GET",
-        	  url: "?q=lookup/get/views",
-        	  data: {"viewId": viewId},
-        	  dataType: "html",
-        	  success: function(htmlData){
-        	  	//replace the content of lookup_content_wrapper with htmldata
-        	  	$('#lookup_content_wrapper').html(htmlData);
-        	  	
-        		lookup.addSelectLink(inputId,frameId);
-        	  }
-        	});    
-    };
+    $.ajax({
+      type: "GET",
+      url: "?q=lookup/get/views",
+      data: {
+        "viewId": viewId
+      },
+      dataType: "html",
+      success: function(htmlData){
+        //replace the content of lookup_content_wrapper with htmldata
+        $('#lookup_content_wrapper').html(htmlData);
 
-    //TODO:add link for the first column for user selection data
-    //trigger the selectback event in the click event of link
-    //The last thing in the click event is to close the dialog.(jQuery dialog API close())
-    lookup.addSelectLink = function(inputId,frameId){
-      $('#lookup_content_wrapper .view-content table tbody tr td:first-child').each(function(){
-        var value = $(this).text();
-        $(this).text('');
-        var link = '<a href="#">' + value + '</a>';
-        $(this).html(link);
-        
-        //Add click event to the link of first column
-        $(this).click(function(){
-	        var list = new Array();
-	    	$(this).parent().children().each(function(index){
-	    		 list[index]= $(this).text();
-	    		});
-	    	
-	    	$('#' + inputId).trigger('selectback', [list]);
-	    	$('#' + frameId).dialog("close");
-	    	
-	    	});
+        Lookup.addSelectLink(inputId,frameId);
+      }
+    });
+  };
+
+  /**
+   * Add link for every first td elements, and bind click event for every links
+   */
+  Lookup.addSelectLink = function(inputId,frameId){
+    $('#lookup_content_wrapper .view-content table tbody tr td:first-child').each(function(){
+      var inputSelector = '#' + inputId;
+      var value = $(this).text();
+      $(this).text('');
+      var link = '<a href="#">' + value + '</a>';
+      $(this).html(link);
+
+      //Add click event to the link of first column
+      $(this).children('a').click(function(){
+        Lookup.handleSelect($(this), inputSelector);
+        $('#' + frameId).dialog("close");
       });
-    };
+    });
+  };
 
-    lookup.findBrowseLink = function(inputId) {
-        return $('#' + inputId).parent('div').children('span').children('a');
+  /**
+   * Handling select event
+   */
+  Lookup.handleSelect = function(linkObject, inputSelector) {
+    var list = new Array();
+    $(linkObject).parent().parent().children().each(function(index){
+      list[index]= $.trim($(this).text());
+    });
+    if(typeof $(inputSelector).data('events').selectback == 'undefined') {
+      //Default assign the first column value into the input element
+      $(inputSelector).val(list[0]);
+    } else {
+      //Call user defined callback method with whole row's values passing as Array'
+      $(inputSelector).trigger('selectback', [list]);
     }
+  }
+
+  /**
+   * Find lookup link element by specified input element's id
+   */
+  Lookup.findBrowseLink = function(inputId) {
+    return $('#' + inputId).parent('div').children('span').children('a');
+  }
 
 })(jQuery);
+

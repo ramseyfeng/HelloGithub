@@ -7,15 +7,6 @@ function lookup_menu(){
 
 //TODO:define the url path(lookup/get/views) for view content page
   $items = array();
-  $items['lookup/test/testDrupal'] = array(
-    'title' => t('Test Form'),
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('lookup_test_form'),
-    'access arguments' => array('test form'),
-    'menu_name' => 'main-menu', //to display in main menu
-    'file' => 'test/lookup.test.inc',
-  );
-
   $items['lookup/get/views'] = array(
     'title' => t('Lookup Load Views'),
     'description' => t('Lookup Views Page'),
@@ -24,7 +15,11 @@ function lookup_menu(){
     'file' => 'lookup.load_views.inc',
     'access callback' => TRUE,
   );
-  
+
+//TODO: Enable below to lines if you need a test demo.
+  module_load_include('inc', 'lookup', 'test/test_form_menu');
+  lookup_test_form_menu($items);
+
   return $items;
 
 }
@@ -57,10 +52,10 @@ function lookup_textfield_pre_render_callback($element) {
  * Implements hook_views api
  */
 function lookup_views_api() {
+  //TODO: Enable below to lines if you need a test demo.
   return array(
     'api' => 3,
     'path' => drupal_get_path('module', 'lookup') . '/test/views',
-      // 'template path' => drupal_get_path('module', 'example') . 'themes',
   );
 }
 
@@ -68,6 +63,7 @@ function lookup_views_api() {
  * Implement hook_permission().
  */
 function lookup_permission() {
+  //TODO: Enable below to lines if you need a test demo.
   return array(
     'test form' => array('title' => t('Test Form'),),
   );
