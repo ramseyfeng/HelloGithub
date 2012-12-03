@@ -1,11 +1,17 @@
 <?php
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Lookup Test Form
  */
-
 function lookup_test_form($form, &$form_state) {
+  
+  $js_options = array(
+    'scope' => 'footer',
+    'preprocess' => TRUE,
+  );
+  
+  $lookup_path = drupal_get_path('module', 'lookup');
+  drupal_add_js($lookup_path . '/test/test.js', $js_options);
   
   $form['city'] = array(
     '#lookup' => TRUE,
@@ -35,4 +41,3 @@ function lookup_test_form($form, &$form_state) {
   );
   return $form;
 }
-

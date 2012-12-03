@@ -1,1 +1,0 @@
-browse icon/ajax waiting icon

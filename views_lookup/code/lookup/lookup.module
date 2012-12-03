@@ -3,42 +3,44 @@
 /**
  * hook_menu
  */
-function lookup_menu(){
+function lookup_menu() {
 
-//TODO:define the url path(lookup/get/views) for view content page
   $items = array();
   $items['lookup/get/views'] = array(
-    'title' => t('Lookup Load Views'),
-    'description' => t('Lookup Views Page'),
-    'page callback' => 'lookup_load_views',
-    'type' => MENU_CALLBACK,
-    'file' => 'lookup.load_views.inc',
-    'access callback' => TRUE,
+      'title' => t('Lookup Load Views'),
+      'description' => t('Lookup Views Page'),
+      'page callback' => 'lookup_load_views',
+      'type' => MENU_CALLBACK,
+      'file' => 'lookup.load_views.inc',
+      'access callback' => TRUE,
   );
 
-//TODO: Enable below to lines if you need a test demo.
+  //Enable below to lines if you need a test demo.
   module_load_include('inc', 'lookup', 'test/test_form_menu');
   lookup_test_form_menu($items);
 
   return $items;
-
 }
 
 /**
  * hook_element_info_alter
  */
-function lookup_element_info_alter(&$type){
+function lookup_element_info_alter(&$type) {
   //TODO: use the #pre_render of textfield to wrapper the browse link
   if (!isset($type['textfield']['#pre_render'])) {
     $type['textfield']['#pre_render'] = array();
   }
-  array_unshift($type['textfield']['#pre_render'],
-      'lookup_textfield_pre_render_callback');
+  array_unshift($type['textfield']['#pre_render'], 'lookup_textfield_pre_render_callback');
 }
 
+/**
+ * Generate the lookup icon in element prerender callback
+ * @param $element
+ * @return $element 
+ */
 function lookup_textfield_pre_render_callback($element) {
-  if(isset($element['#type']) && $element['#type'] == 'textfield'
-  && isset($element['#lookup']) && $element['#lookup'] == TRUE) {
+  if (isset($element['#type']) && $element['#type'] == 'textfield'
+          && isset($element['#lookup']) && $element['#lookup'] == TRUE) {
     drupal_add_library('system', 'ui.dialog');
     $path = drupal_get_path('module', 'lookup');
     $element['#field_suffix'] = '<a href="#">
@@ -48,27 +50,13 @@ function lookup_textfield_pre_render_callback($element) {
   return $element;
 }
 
+//Enable below to lines if you need a test demo.
 /**
  * Implements hook_views api
  */
 function lookup_views_api() {
-  //TODO: Enable below to lines if you need a test demo.
   return array(
-    'api' => 3,
-    'path' => drupal_get_path('module', 'lookup') . '/test/views',
+      'api' => 3,
+      'path' => drupal_get_path('module', 'lookup') . '/test/views',
   );
 }
-
-/**
- * Implement hook_permission().
- */
-function lookup_permission() {
-  //TODO: Enable below to lines if you need a test demo.
-  return array(
-    'test form' => array('title' => t('Test Form'),),
-  );
-}
-
-
-
-

@@ -1,9 +1,8 @@
 <?php
 
 /*
- * Call views API to get the views content
+ * Call views API to load the views content
  */
-
 function lookup_load_views() {
 
   $result = '';
