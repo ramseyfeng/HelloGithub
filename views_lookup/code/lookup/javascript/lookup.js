@@ -97,7 +97,7 @@
 
       //Add click event to the link of first column
       $(this).children('a').click(function(){
-        Lookup.handleSelect($(this), inputSelector);
+        Lookup.handleSelect.call(this, inputSelector);
         $('#' + frameId).dialog("close");
       });
     });
@@ -106,9 +106,9 @@
   /**
    * Handling select event
    */
-  Lookup.handleSelect = function(linkObject, inputSelector) {
+  Lookup.handleSelect = function(inputSelector) {
     var list = new Array();
-    $(linkObject).parent().parent().children().each(function(index){
+    $(this).parent().parent().children().each(function(index){
       list[index]= $.trim($(this).text());
     });
     if(typeof $(inputSelector).data('events').selectback == 'undefined') {
