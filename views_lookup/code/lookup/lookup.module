@@ -26,7 +26,7 @@ function lookup_menu() {
  * hook_element_info_alter
  */
 function lookup_element_info_alter(&$type) {
-  //TODO: use the #pre_render of textfield to wrapper the browse link
+  //use the #pre_render of textfield to wrapper the browse link
   if (!isset($type['textfield']['#pre_render'])) {
     $type['textfield']['#pre_render'] = array();
   }
@@ -43,9 +43,17 @@ function lookup_textfield_pre_render_callback($element) {
           && isset($element['#lookup']) && $element['#lookup'] == TRUE) {
     drupal_add_library('system', 'ui.dialog');
     $path = drupal_get_path('module', 'lookup');
-    $element['#field_suffix'] = '<a href="#">
-                                   <img src="' . $path . '/img/search.png">
-                                 </a>';
+    $lookup_img_link  = '<a href="#">
+                            <img src="' . $path . '/img/search.png">
+                        </a>';
+    if(isset($element['#field_suffix']))
+    {
+      $element['#field_suffix'] = $element['#field_suffix'] . $lookup_img_link;
+    }
+    else
+    {
+      $element['#field_suffix'] = $lookup_img_link;
+    }
   }
   return $element;
 }
