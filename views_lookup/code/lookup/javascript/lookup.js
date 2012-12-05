@@ -20,7 +20,11 @@
    *   the first element's value will be filled into the corresponding input element.)
    *   @inputId the id of input element with a lookup.
    *   @viewId the id of the view which you want to associate it with the input element.\
-   *   @eventHandler callback method for user to do post handling
+   *   @eventHandler callback method for user to handle the selected data. This callback has two
+   *   parameters: eventHandler(event,selectedList)
+   *   event is the jquery event object
+   *   selectedList is an array with selected row, which selectedList[0] reflects to the value of first column
+   *   selectedList[1] reflects to the value of second column and so on.
    */
   Lookup.setUp = function(inputId,viewId,eventHandler){
     var lookupLink = Lookup.findBrowseLink(inputId);
