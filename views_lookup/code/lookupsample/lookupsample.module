@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * hook_menu
+ */
+function lookupSample_menu() {
+
+  $items = array();
+
+  //Enable below to lines if you need a test demo.
+  $items['lookupsample/test/testDrupal'] = array(
+    'title' => t('Test Form'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('lookup_sample_form'),
+    'access callback' => TRUE,
+    'menu_name' => 'main-menu',
+    'file' => 'test/lookup.lookupsample_form.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_views api
+ */
+function lookupSample_views_api() {
+  return array(
+      'api' => 3,
+      'path' => drupal_get_path('module', 'lookupsample') . '/test/views',
+  );
+}

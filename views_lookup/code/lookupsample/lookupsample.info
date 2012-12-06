@@ -1,0 +1,15 @@
+name = lookupSample
+description = Provider lookup sample.
+package = User interface
+core = 7.x
+files[] = lookupsample.module
+
+;stylesheets
+
+
+
+;scripts
+scripts[] = js/lookupsample.js
+
+dependencies[] = views
+

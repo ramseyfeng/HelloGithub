@@ -16,8 +16,8 @@ function lookup_menu() {
   );
 
   //Enable below to lines if you need a test demo.
-  module_load_include('inc', 'lookup', 'test/test_form_menu');
-  lookup_test_form_menu($items);
+//  module_load_include('inc', 'lookup', 'test/test_form_menu');
+//  lookup_test_form_menu($items);
 
   return $items;
 }
@@ -36,7 +36,7 @@ function lookup_element_info_alter(&$type) {
 /**
  * Generate the lookup icon in element prerender callback
  * @param $element
- * @return $element 
+ * @return $element
  */
 function lookup_textfield_pre_render_callback($element) {
   if (isset($element['#type']) && $element['#type'] == 'textfield'
@@ -56,15 +56,4 @@ function lookup_textfield_pre_render_callback($element) {
     }
   }
   return $element;
-}
-
-//Enable below to lines if you need a test demo.
-/**
- * Implements hook_views api
- */
-function lookup_views_api() {
-  return array(
-      'api' => 3,
-      'path' => drupal_get_path('module', 'lookup') . '/test/views',
-  );
 }
