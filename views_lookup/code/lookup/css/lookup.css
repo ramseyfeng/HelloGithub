@@ -19,17 +19,17 @@ div.browse_wrapper > div + a > img {
 }
 
 .browse-loading {
-  left: 46%;
+  left: 30%;
   position: absolute;
-  top: 45%;
+  top: 30%;
   z-index: 1000;
   background-color: rgba(35, 35, 35, 0);
-  background-image: url('../img/loading.gif?1');
+  background-image: url('../img/loading.gif?2');
   background-position: center center;
   background-repeat: no-repeat;
-  height: 100px;
+  height: 128px;
   opacity: .9;
-  width: 48px;
+  width: 128px;
 }
 
 #lookup_content_wrapper table a{

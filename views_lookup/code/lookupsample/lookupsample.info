@@ -1,4 +1,4 @@
-name = lookupSample
+name = lookupsample
 description = Provider lookup sample.
 package = User interface
 core = 7.x

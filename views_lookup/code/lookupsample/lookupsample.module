@@ -3,7 +3,7 @@
 /**
  * hook_menu
  */
-function lookupSample_menu() {
+function lookupsample_menu() {
 
   $items = array();
 
@@ -14,7 +14,7 @@ function lookupSample_menu() {
     'page arguments' => array('lookup_sample_form'),
     'access callback' => TRUE,
     'menu_name' => 'main-menu',
-    'file' => 'test/lookup.lookupsample_form.inc',
+    'file' => 'test/lookupsample.lookupsample_form.inc',
   );
 
   return $items;
@@ -23,7 +23,7 @@ function lookupSample_menu() {
 /**
  * Implements hook_views api
  */
-function lookupSample_views_api() {
+function lookupsample_views_api() {
   return array(
       'api' => 3,
       'path' => drupal_get_path('module', 'lookupsample') . '/test/views',

@@ -1,18 +1,18 @@
 <?php
 
 /*
- * Lookup Test Form
+ * Lookup Sample Form
  */
-function lookup_test_form($form, &$form_state) {
-  
+function lookup_sample_form($form, &$form_state) {
+
   $js_options = array(
     'scope' => 'footer',
     'preprocess' => TRUE,
   );
-  
-  $lookup_path = drupal_get_path('module', 'lookup');
-  drupal_add_js($lookup_path . '/test/test.js', $js_options);
-  
+
+  $lookupsample_path = drupal_get_path('module', 'lookupsample');
+  drupal_add_js($lookupsample_path . '/test/test.js', $js_options);
+
   $form['city'] = array(
     '#lookup' => TRUE,
     '#type' => 'textfield',
