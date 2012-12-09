@@ -1,5 +1,5 @@
 name = looup
-description = Provides looup popup browse based on views.
+description = Provide looup popup browse based on views.
 package = User interface
 core = 7.x
 files[] = lookup.module

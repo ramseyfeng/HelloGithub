@@ -19,9 +19,8 @@ div.browse_wrapper > div + a > img {
 }
 
 .browse-loading {
-  left: 30%;
-  position: absolute;
-  top: 30%;
+  margin-left:auto;
+  margin-right:auto;
   z-index: 1000;
   background-color: rgba(35, 35, 35, 0);
   background-image: url('../img/loading.gif?2');

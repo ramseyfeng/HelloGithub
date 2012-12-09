@@ -1,5 +1,5 @@
 name = lookupsample
-description = Provider lookup sample.
+description = Provide lookup sample.
 package = User interface
 core = 7.x
 files[] = lookupsample.module

@@ -23,7 +23,6 @@ function lookup_sample_form($form, &$form_state) {
   );
 
   $form['country'] = array(
-    '#lookup' => TRUE,
     '#type' => 'textfield',
     '#title' => t('Country'),
     '#size' => 12,
